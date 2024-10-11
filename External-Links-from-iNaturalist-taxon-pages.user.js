@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.5.1
+// @version      2.5.2
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
@@ -28,6 +28,7 @@
         if (scientificNameElement) {
             let scientificName = scientificNameElement.textContent.trim();
             console.log("Scientific name retrieved: " + scientificName);
+            let lowscientificName = scientificName.toLowerCase().replace(/ /g, '-');
 
             // Call the INPN API to find taxa using fuzzyMatch
             let inpnApiUrl = `https://taxref.mnhn.fr/api/taxa/fuzzyMatch?term=${encodeURIComponent(scientificName)}`;
@@ -110,6 +111,7 @@
 									{ href: `https://www.galerie-insecte.org/galerie/wikige.php?tax=${scientificName}`, textContent: "LMDI Galerie" },
 									{ href: `https://base-aer.fr/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "AER Nantes" },
 									{ href: `https://lorraine-entomologie.org/webobs/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "SLE Entomo Grand-Est" },
+									{ href: `https://atlas-odonates.insectes.org/odonates-de-france/${lowscientificName}`, textContent: "Odonates de France" },
 									{ href: `https://bladmineerders.nl/?s=${scientificName}`, textContent: "Plant Parasites of Europe" },
 									{ href: `https://fr.wikipedia.org/wiki/${scientificName}`, textContent: "Wikipedia FR" },
 									{ href: `https://www.wikidata.org/w/index.php?search=${scientificName}`, textContent: "Wikidata" }
