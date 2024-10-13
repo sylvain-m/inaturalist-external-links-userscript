@@ -113,6 +113,7 @@
 									{ href: `https://lorraine-entomologie.org/webobs/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "SLE Entomo Grand-Est" },
 									{ href: `https://atlas-odonates.insectes.org/odonates-de-france/${lowscientificName}`, textContent: "Odonates de France" },
 									{ href: `https://bladmineerders.nl/?s=${scientificName}`, textContent: "Plant Parasites of Europe" },
+									{ href: `https://observation.org/species/search/?q=${scientificName}`, textContent: "Observation.org" },
 									{ href: `https://fr.wikipedia.org/wiki/${scientificName}`, textContent: "Wikipedia FR" },
 									{ href: `https://www.wikidata.org/w/index.php?search=${scientificName}`, textContent: "Wikidata" }
 								];
