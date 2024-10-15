@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.6.2
+// @version      2.6.3
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
@@ -206,13 +206,18 @@
 									checkbox.style.marginRight = '5px';
 									checkbox.checked = linkPreferences[linkInfo.textContent] !== false;
 
-									checkbox.addEventListener('change', function() {
-										linkPreferences[linkInfo.textContent] = checkbox.checked;
-										localStorage.setItem('externalLinkPreferences', JSON.stringify(linkPreferences));
+                                    checkbox.addEventListener('change', function() {
+                                        linkPreferences[linkInfo.textContent] = checkbox.checked;
+                                        localStorage.setItem('externalLinkPreferences', JSON.stringify(linkPreferences));
 
-										let linkElement = dropdownContent.querySelector(`a span:contains("${linkInfo.textContent}")`).parentNode;
-										linkElement.style.display = checkbox.checked ? "block" : "none";
-									});
+                                        let linkElements = dropdownContent.querySelectorAll('a span');
+                                        linkElements.forEach(function(linkTextElement) {
+                                            if (linkTextElement.textContent === linkInfo.textContent) {
+                                                let linkElement = linkTextElement.parentNode;
+                                                linkElement.style.display = checkbox.checked ? "block" : "none";
+                                            }
+                                        });
+                                    });
 
 									let label = document.createElement('label');
 									label.textContent = linkInfo.textContent;
