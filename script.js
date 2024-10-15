@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.6.0
+// @version      2.6.1
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
@@ -65,11 +65,15 @@
 								dropdownContent.style.display = "none"; // Initially hidden
 								dropdownContent.style.position = "absolute";
 								dropdownContent.style.backgroundColor = "#f9f9f9";
-								dropdownContent.style.minWidth = "160px";
+								dropdownContent.style.minWidth = "300px"; // Increased width for two columns
+								dropdownContent.style.maxHeight = "400px"; // Limit the height to avoid overflow
+								dropdownContent.style.overflowY = "auto"; // Enable vertical scrolling
 								dropdownContent.style.boxShadow = "0px 8px 16px 0px rgba(0,0,0,0.2)";
 								dropdownContent.style.zIndex = "1";
 								dropdownContent.style.borderRadius = "4px";
 								dropdownContent.style.textAlign = "left";
+								dropdownContent.style.columnCount = "3"; // Two columns layout
+								dropdownContent.style.columnGap = "10px"; // Gap between columns
 
 								// Toggle dropdown visibility
 								dropdownButton.onclick = function() {
