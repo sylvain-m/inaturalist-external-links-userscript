@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.5.3
-// @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links.
+// @version      2.6.0
+// @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
 // @grant        none
@@ -88,53 +88,69 @@
 
 								// Define external links
 								const links = [
-									{ href: `https://www.gbif.org/species/${speciesKey}`, textContent: "GBIF" },
-									{ href: `https://inpn.mnhn.fr/espece/cd_nom/${taxonId}`, textContent: "INPN" },
-									{ href: `https://openobs.mnhn.fr/redirect/inpn/taxa/${taxonId}?view=map`, textContent: "INPN - OpenObs" },
-									{ href: `https://siflore.fcbn.fr/?cd_ref=${taxonId}&r=metro`, textContent: "FCBN - SI Flore" },
-									{ href: `https://oreina.org/artemisiae/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Artemisiae" },
-									{ href: `http://www.lepiforum.de/lepiwiki.pl?${scientificName}`, textContent: "LepiForum" },
-									{ href: `https://odin.anbdd.fr/espece/${taxonId}`, textContent: "ODIN" },
-									{ href: `https://biodiv-paysdelaloire.fr/espece/${taxonId}`, textContent: "Biodiv'PDL" },
-									{ href: `http://data.biodiversite-bretagne.fr/espece/${taxonId}`, textContent: "Biodiv'Bretagne" },
-									{ href: `https://atlas.biodiversite-auvergne-rhone-alpes.fr/espece/${taxonId}`, textContent: "Biodiv'AURA" },
-									{ href: `https://clicnat.fr/espece/${taxonId}`, textContent: "ClicNat Picardie Nature" },
-									{ href: `https://nature.silene.eu/espece/${taxonId}`, textContent: "Silene Nature (PACA)" },
-									{ href: `https://geonature.arb-idf.fr/atlas/espece/${taxonId}`, textContent: "Biodiv'îDF" },
-									{ href: `https://natureocentre.org/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Nature'O'Centre" },
-									{ href: `https://obsindre.fr/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Obs'Indre" },
-									{ href: `https://obs28.org/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Obs'28" },
-									{ href: `https://biodivorne.affo-nature.org/espece/${taxonId}`, textContent: "Biodiv'Orne" },
-									{ href: `https://biodiversite.parc-naturel-normandie-maine.fr/espece/${taxonId}`, textContent: "Biodiv'Normandie-Maine" },
-									{ href: `https://biodiversite.ecrins-parcnational.fr/espece/${taxonId}`, textContent: "Biodiv'Ecrins" },
-									{ href: `https://www.insecte.org/forum/search.php?keywords=${scientificName}&terms=all&author=&sc=1&sf=titleonly&sr=topics&sk=t&sd=d&st=0&ch=300&t=0&submit=Rechercher`, textContent: "LMDI Forum" },
-									{ href: `https://www.galerie-insecte.org/galerie/wikige.php?tax=${scientificName}`, textContent: "LMDI Galerie" },
-									{ href: `https://base-aer.fr/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "AER Nantes" },
-									{ href: `https://lorraine-entomologie.org/webobs/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "SLE Entomo Grand-Est" },
-									{ href: `https://atlas-odonates.insectes.org/odonates-de-france/${lowscientificName}`, textContent: "Odonates de France" },
-									{ href: `https://bladmineerders.nl/?s=${scientificName}`, textContent: "Plant Parasites of Europe" },
-									{ href: `https://observation.org/species/search/?q=${scientificName}`, textContent: "Observation.org" },
-									{ href: `https://fr.wikipedia.org/wiki/${scientificName}`, textContent: "Wikipedia FR" },
-									{ href: `https://www.wikidata.org/w/index.php?search=${scientificName}`, textContent: "Wikidata" }
+									{ href: `https://www.gbif.org/species/${speciesKey}`, textContent: "GBIF", domain: "gbif.org" },
+									{ href: `https://inpn.mnhn.fr/espece/cd_nom/${taxonId}`, textContent: "INPN", domain: "inpn.mnhn.fr" },
+									{ href: `https://openobs.mnhn.fr/redirect/inpn/taxa/${taxonId}?view=map`, textContent: "INPN - OpenObs", domain: "openobs.mnhn.fr" },
+									{ href: `https://siflore.fcbn.fr/?cd_ref=${taxonId}&r=metro`, textContent: "FCBN - SI Flore", domain: "siflore.fcbn.fr" },
+									{ href: `https://oreina.org/artemisiae/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Artemisiae", domain: "oreina.org" },
+									{ href: `http://www.lepiforum.de/lepiwiki.pl?${scientificName}`, textContent: "LepiForum", domain: "lepiforum.de" },
+									{ href: `https://odin.anbdd.fr/espece/${taxonId}`, textContent: "ODIN", domain: "openobs.mnhn.fr" },
+									{ href: `https://biodiv-paysdelaloire.fr/espece/${taxonId}`, textContent: "Biodiv'PDL", domain: "odin.anbdd.fr" },
+									{ href: `http://data.biodiversite-bretagne.fr/espece/${taxonId}`, textContent: "Biodiv'Bretagne", domain: "data.biodiversite-bretagne.fr" },
+									{ href: `https://atlas.biodiversite-auvergne-rhone-alpes.fr/espece/${taxonId}`, textContent: "Biodiv'AURA", domain: "atlas.biodiversite-auvergne-rhone-alpes.fr" },
+									{ href: `https://clicnat.fr/espece/${taxonId}`, textContent: "ClicNat Picardie Nature", domain: "clicnat.fr" },
+									{ href: `https://nature.silene.eu/espece/${taxonId}`, textContent: "Silene Nature (PACA)", domain: "nature.silene.eu" },
+									{ href: `https://geonature.arb-idf.fr/atlas/espece/${taxonId}`, textContent: "Biodiv'îDF", domain: "geonature.arb-idf.fr" },
+									{ href: `https://natureocentre.org/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Nature'O'Centre", domain: "natureocentre.org" },
+									{ href: `https://obsindre.fr/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Obs'Indre", domain: "obsindre.fr" },
+									{ href: `https://obs28.org/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Obs'28", domain: "obs28.org" },
+									{ href: `https://biodivorne.affo-nature.org/espece/${taxonId}`, textContent: "Biodiv'Orne", domain: "biodivorne.affo-nature.org" },
+									{ href: `https://biodiversite.parc-naturel-normandie-maine.fr/espece/${taxonId}`, textContent: "Biodiv'Normandie-Maine", domain: "biodiversite.parc-naturel-normandie-maine.fr" },
+									{ href: `https://biodiversite.ecrins-parcnational.fr/espece/${taxonId}`, textContent: "Biodiv'Ecrins", domain: "biodiversite.ecrins-parcnational.fr" },
+									{ href: `https://www.insecte.org/forum/search.php?keywords=${scientificName}&terms=all&author=&sc=1&sf=titleonly&sr=topics&sk=t&sd=d&st=0&ch=300&t=0&submit=Rechercher`, textContent: "LMDI Forum", domain: "insecte.org" },
+									{ href: `https://www.galerie-insecte.org/galerie/wikige.php?tax=${scientificName}`, textContent: "LMDI Galerie", domain: "galerie-insecte.org" },
+									{ href: `https://base-aer.fr/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "AER Nantes", domain: "base-aer.fr" },
+									{ href: `https://lorraine-entomologie.org/webobs/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "SLE Entomo Grand-Est", domain: "lorraine-entomologie.org" },
+									{ href: `https://atlas-odonates.insectes.org/odonates-de-france/${lowscientificName}`, textContent: "Odonates de France", domain: "atlas-odonates.insectes.org" },
+									{ href: `https://bladmineerders.nl/?s=${scientificName}`, textContent: "Plant Parasites of Europe", domain: "bladmineerders.nl" },
+									{ href: `https://observation.org/species/search/?q=${scientificName}`, textContent: "Observation.org", domain: "observation.org" },
+									{ href: `https://fr.wikipedia.org/wiki/${scientificName}`, textContent: "Wikipedia FR", domain: "fr.wikipedia.org" },
+									{ href: `https://www.wikidata.org/w/index.php?search=${scientificName}`, textContent: "Wikidata", domain: "wikidata.org" }
 								];
 
-								// Loop to create link elements
+								// Loop to create link elements with favicons
 								links.forEach(linkInfo => {
 									let linkElement = document.createElement('a');
 									linkElement.href = linkInfo.href;
 									linkElement.target = "_blank";
-									linkElement.textContent = linkInfo.textContent;
+
 									linkElement.style.display = linkPreferences[linkInfo.textContent] !== false ? "block" : "none";
 									linkElement.style.padding = "8px";
 									linkElement.style.textDecoration = "none";
 									linkElement.style.color = "black";
 									linkElement.style.backgroundColor = "#f9f9f9";
+									linkElement.style.display = "flex";
+									linkElement.style.alignItems = "center";
+
 									linkElement.onmouseover = function() {
 										linkElement.style.backgroundColor = "#ddd";
 									};
 									linkElement.onmouseout = function() {
 										linkElement.style.backgroundColor = "#f9f9f9";
 									};
+
+									// Add favicon
+									let favicon = document.createElement('img');
+									favicon.src = `https://www.google.com/s2/favicons?domain=${linkInfo.domain}`;
+									favicon.style.width = '16px';
+									favicon.style.height = '16px';
+									favicon.style.marginRight = '8px';
+									linkElement.appendChild(favicon);
+
+									// Add link text
+									let linkText = document.createElement('span');
+									linkText.textContent = linkInfo.textContent;
+									linkElement.appendChild(linkText);
 
 									dropdownContent.appendChild(linkElement);
 								});
@@ -190,12 +206,13 @@
 										linkPreferences[linkInfo.textContent] = checkbox.checked;
 										localStorage.setItem('externalLinkPreferences', JSON.stringify(linkPreferences));
 
-										let linkElement = dropdownContent.querySelector(`a[href="${linkInfo.href}"]`);
-										linkElement.style.display = checkbox.checked ? 'block' : 'none';
+										let linkElement = dropdownContent.querySelector(`a span:contains("${linkInfo.textContent}")`).parentNode;
+										linkElement.style.display = checkbox.checked ? "block" : "none";
 									});
 
 									let label = document.createElement('label');
 									label.textContent = linkInfo.textContent;
+									label.style.fontWeight = "normal";
 
 									settingsWrapper.appendChild(checkbox);
 									settingsWrapper.appendChild(label);
