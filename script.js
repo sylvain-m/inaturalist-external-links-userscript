@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.6.3
+// @version      2.6.4
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
@@ -96,6 +96,7 @@
                             { href: `https://inpn.mnhn.fr/espece/cd_nom/${taxonId}`, textContent: "INPN", domain: "inpn.mnhn.fr" },
                             { href: `https://openobs.mnhn.fr/redirect/inpn/taxa/${taxonId}?view=map`, textContent: "INPN - OpenObs", domain: "openobs.mnhn.fr" },
                             { href: `https://siflore.fcbn.fr/?cd_ref=${taxonId}&r=metro`, textContent: "FCBN - SI Flore", domain: "siflore.fcbn.fr" },
+                            { href: `https://atlas.lashf.org/espece/${taxonId}`, textContent: "SHF Reptiles & Amphibiens", domain: "atlas.lashf.org" },
                             { href: `https://oreina.org/artemisiae/index.php?module=taxon&action=taxon&id=${taxonId}`, textContent: "Artemisiae", domain: "oreina.org" },
                             { href: `http://www.lepiforum.de/lepiwiki.pl?${scientificName}`, textContent: "LepiForum", domain: "lepiforum.de" },
                             { href: `https://odin.anbdd.fr/espece/${taxonId}`, textContent: "ODIN", domain: "anbdd.fr" },
