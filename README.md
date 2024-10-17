@@ -9,7 +9,7 @@ Presentation : https://forum.inaturalist.org/t/add-external-links-on-taxon-pages
 [External Links Userscript](./script.js)
 
 # Demo
-![Description du GIF](./inaturalist_external_links.gif)
+![Gif demo](./inaturalist_external_links.gif)
 
 # References
 https://www.inaturalist.org
