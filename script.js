@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.6.5
+// @version      2.6.6
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
