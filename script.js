@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.6.7
+// @version      2.7.0
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
@@ -38,20 +38,29 @@
             fetch(inpnApiUrl)
                 .then(response => response.json())
                 .then(jsonData => {
+                let taxonId = 0; // default value if taxon not found
                 if (jsonData._embedded && jsonData._embedded.taxa && jsonData._embedded.taxa.length > 0) {
                     let matchingTaxon = jsonData._embedded.taxa[0];
-                    let taxonId = matchingTaxon.id;
+                    taxonId = matchingTaxon.id;
                     console.log("INPN Taxon ID found: " + taxonId);
+                } else {
+                    console.log("No matching taxon found, setting Taxon ID to 0.");
+                }
 
-                    // Call the GBIF API to find taxa
-                    let gbifApiUrl = `https://api.gbif.org/v1/species/match?name=${encodeURIComponent(scientificName)}`;
-                    console.log("Requesting from GBIF API: " + gbifApiUrl);
+                // Call the GBIF API to find taxa
+                let gbifApiUrl = `https://api.gbif.org/v1/species/match?name=${encodeURIComponent(scientificName)}`;
+                console.log("Requesting from GBIF API: " + gbifApiUrl);
 
-                    fetch(gbifApiUrl)
-                        .then(response => response.json())
-                        .then(gbifData => {
-                        let speciesKey = gbifData.speciesKey;
+                fetch(gbifApiUrl)
+                    .then(response => response.json())
+                    .then(gbifData => {
+                    let speciesKey = 0; // default value if taxon not found
+                    if (gbifData.speciesKey) {
+                        speciesKey = gbifData.speciesKey;
                         console.log("GBIF speciesKey found: " + speciesKey);
+                    } else {
+                        console.log("No matching taxon found in GBIF, setting speciesKey to 0.");
+                    }
 
                         // Create a dropdown button for external links
                         let dropdownButton = document.createElement('button');
@@ -239,7 +248,7 @@
                     })
                         .catch(error => console.error("Error while requesting the GBIF API: ", error));
                 }
-            })
+            )
                 .catch(error => console.error("Error while requesting the INPN API: ", error));
         } else {
             console.log("Scientific name not found on this page.");
