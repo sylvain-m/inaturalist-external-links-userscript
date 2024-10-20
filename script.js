@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.6.6
+// @version      2.6.7
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
@@ -29,6 +29,7 @@
             let scientificName = scientificNameElement.textContent.trim();
             console.log("Scientific name retrieved: " + scientificName);
             let lowscientificName = scientificName.toLowerCase().replace(/ /g, '-');
+            let [genusName, speciesName] = scientificName.split(' ');
 
             // Call the INPN API to find taxa using fuzzyMatch
             let inpnApiUrl = `https://taxref.mnhn.fr/api/taxa/fuzzyMatch?term=${encodeURIComponent(scientificName)}`;
@@ -123,6 +124,7 @@
                             { href: `https://www.wikidata.org/w/index.php?search=${scientificName}`, textContent: "Wikidata", domain: "wikidata.org" },
                             { href: `https://jessica-joachim.com/?s=${scientificName}`, textContent: "Carnets nature Jessica", domain: "jessica-joachim.com" },
                             { href: `https://www.featherbase.info/fr/search/${scientificName}?searchterm=${scientificName}`, textContent: "Featherbase", domain: "www.featherbase.info" },
+                            { href: `https://www.mycodb.fr/fiche.php?genre=${genusName}&espece=${speciesName}`, textContent: "MycoDB", domain: "mycodb.fr" },
                             { href: `https://doris.ffessm.fr/find/species/(name)/${scientificName}`, textContent: "DORIS", domain: "doris.ffessm.fr" }
                         ];
 
