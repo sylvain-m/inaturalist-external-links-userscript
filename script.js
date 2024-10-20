@@ -122,7 +122,7 @@
                             { href: `https://fr.wikipedia.org/wiki/${scientificName}`, textContent: "Wikipedia FR", domain: "fr.wikipedia.org" },
                             { href: `https://www.wikidata.org/w/index.php?search=${scientificName}`, textContent: "Wikidata", domain: "wikidata.org" },
                             { href: `https://jessica-joachim.com/?s=${scientificName}`, textContent: "Carnets nature Jessica", domain: "jessica-joachim.com" },
-                            { href: `https://www.featherbase.info/fr/search/Strix?searchterm=${scientificName}`, textContent: "Featherbase", domain: "www.featherbase.info" },
+                            { href: `https://www.featherbase.info/fr/search/${scientificName}?searchterm=${scientificName}`, textContent: "Featherbase", domain: "www.featherbase.info" },
                             { href: `https://doris.ffessm.fr/find/species/(name)/${scientificName}`, textContent: "DORIS", domain: "doris.ffessm.fr" }
                         ];
 
