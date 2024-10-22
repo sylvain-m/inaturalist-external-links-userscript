@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         External Links from iNaturalist taxon pages
 // @namespace    http://tampermonkey.net/
-// @version      2.7.0
+// @version      2.7.1
 // @description  Adds a dropdown with links to external species pages (INPN, Artemisiae, ODIN, Biodiv'PDL, Biodiv'Orne, Biodiv'Normandie-Maine) on iNaturalist taxon pages, with a settings button to control visible links, now with favicons.
 // @author       Sylvain Montagner (with ChatGPT help)
 // @match        https://www.inaturalist.org/taxa/*
@@ -134,6 +134,9 @@
                             { href: `https://jessica-joachim.com/?s=${scientificName}`, textContent: "Carnets nature Jessica", domain: "jessica-joachim.com" },
                             { href: `https://www.featherbase.info/fr/search/${scientificName}?searchterm=${scientificName}`, textContent: "Featherbase", domain: "www.featherbase.info" },
                             { href: `https://www.mycodb.fr/fiche.php?genre=${genusName}&espece=${speciesName}`, textContent: "MycoDB", domain: "mycodb.fr" },
+                            { href: `https://araneae.nmbe.ch/search?freeSearchType=genspec&freeSearchMatch=begins&freeSearch=Araneus%20diadematus`, textContent: "Aranea Europe", domain: "araneae.nmbe.ch" },
+                            { href: `https://www.qwant.com/?l=fr&q=${scientificName}`, textContent: "Qwant Fr", domain: "qwant.com" },
+                            { href: `https://www.google.fr/search?q=${scientificName}`, textContent: "Google Fr", domain: "google.fr" },
                             { href: `https://doris.ffessm.fr/find/species/(name)/${scientificName}`, textContent: "DORIS", domain: "doris.ffessm.fr" }
                         ];
 
